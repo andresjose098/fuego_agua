@@ -1,0 +1,14 @@
+<h1>Bienvenido a la Aplicación</h1>
+
+<% if session[:user_id] %>
+  <p>Estás conectado.</p>
+<%= link_to 'Cerrar sesión', logout_path, method: :delete, data: { confirm: '¿Estás seguro de que deseas cerrar sesión?' } %>
+
+
+
+
+
+
+<% else %>
+  <p>Por favor, <%= link_to 'inicia sesión', login_path %> o <%= link_to 'regístrate', register_path %>.</p>
+<% end %>

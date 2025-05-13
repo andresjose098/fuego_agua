@@ -1,0 +1,21 @@
+<h1 class="titulo">Iniciar sesión</h1>
+
+<%= form_with url: login_path, local: true do |form| %>
+  <div class="input-group">
+    <%= form.label :email, "Correo electrónico" %>
+    <%= form.text_field :email, class: "input", placeholder: "ejemplo@email.com" %>
+  </div>
+  
+  <div class="input-group">
+    <%= form.label :password, "Contraseña" %>
+    <%= form.password_field :password, class: "input", placeholder: "********" %>
+  </div>
+
+  <div class="submit-group">
+    <%= form.submit "Iniciar sesión", class: "btn-submit" %>
+  </div>
+<% end %>
+
+<div class="registro">
+  <p>NO tienes cuenta? <%= link_to 'Regístrate', register_path, class: 'link-register' %></p>
+</div>
