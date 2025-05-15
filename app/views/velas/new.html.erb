@@ -1,3 +1,5 @@
+
+
 <h2 style="font-size: 28px; margin-bottom: 20px;">🕯️ Personalizar Vela</h2>
 
 <%= form_with model: @vela, local: true do |f| %>
@@ -85,7 +87,8 @@
 
 
   
-     document.addEventListener("DOMContentLoaded", () => {
+
+    document.addEventListener("DOMContentLoaded", () => {
     const radios = document.querySelectorAll('input[type=radio][name="vela[color]"]');
     const circles = document.querySelectorAll('.circle');
     const modeloSelect = document.getElementById("modelo-select");
@@ -95,7 +98,7 @@
     // === Cambiar imagen según el modelo ===
     modeloSelect.addEventListener("change", () => {
       const modelo = modeloSelect.value.toLowerCase(); // clásico o moderno
-      const imagen = modelo === "moderno" ? "vela_moderna.png" : "vela_clasica.jpg";
+      const imagen = modelo === "moderno" ? "vela_moderna.jpg" : "vela_clasica.jpg";
       previewImg.src = `/assets/${imagen}`;
     });
 
@@ -133,6 +136,11 @@
     <div id="color-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; background-color: transparent; opacity: 0.3; pointer-events: none;"></div>
   </div>
 </div>
+
+<div style="margin-top: 30px;">
+  <%= f.submit "🪄 Publicar Vela", class: "btn btn-primary", style: "padding: 12px 25px; font-size: 18px; background-color: #f39c12; color: white; border: none; border-radius: 8px;" %>
+</div>
+
 
 
 
