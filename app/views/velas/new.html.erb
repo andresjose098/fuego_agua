@@ -135,24 +135,133 @@ function updateColorOverlay(color) {
 }
 
 
+
+document.addEventListener("DOMContentLoaded", () => {
+  const modeloSelect = document.getElementById("modelo-select");
+  const radios = document.querySelectorAll('input[type=radio][name="vela[color]"]');
+
+  function actualizarModelo() {
+    const modelo = modeloSelect.value.toLowerCase();
+    document.getElementById("vela-clasica").style.display = modelo === "clásico" ? "inline" : "none";
+    document.getElementById("vela-moderna").style.display = modelo === "moderno" ? "inline" : "none";
+  }
+
+  function actualizarColor(color) {
+    // Clásica
+    const cuerpoClasico = document.getElementById("cuerpo-clasico");
+    const topClasico = document.getElementById("top-clasica");
+
+    // Moderna
+    const cuerpoModerna = document.getElementById("cuerpo-moderna");
+    const topModerna = document.getElementById("top-moderna");
+
+    if (cuerpoClasico) cuerpoClasico.setAttribute("fill", color);
+    if (topClasico) topClasico.setAttribute("fill", color);
+
+    if (cuerpoModerna) cuerpoModerna.setAttribute("fill", color);
+    if (topModerna) topModerna.setAttribute("fill", color);
+  }
+
+  modeloSelect.addEventListener("change", actualizarModelo);
+
+  radios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      actualizarColor(radio.value);
+    });
+  });
+
+  // Inicializar
+  actualizarModelo();
+  const checked = document.querySelector('input[name="vela[color]"]:checked');
+  if (checked) actualizarColor(checked.value);
+});
+
+
+
 </script>
 
 
 
-  <!-- Vista previa -->
 <div style="margin-bottom: 30px;">
-  <label style="font-size: 18px;"><strong>Vista previa</strong></label><br>
-  <div style="margin-top: 10px; width: 200px;">
-    <svg id="vela-svg" width="100%" height="200" viewBox="0 0 100 200">
-      <!-- Base de la vela -->
-      <rect id="vela-body" x="30" y="60" width="40" height="100" rx="10" fill="#f6e2a6"/>
-      <ellipse id="vela-top" cx="50" cy="60" rx="20" ry="10" fill="#f6e2a6"/>
-      <!-- Llama -->
-      <polygon points="48,50 52,50 50,30" fill="orange"/>
+  <label style="font-size: 18px;"><strong>Vista previa 3D</strong></label><br>
+  <div style="margin-top: 10px; width: 220px;">
+    <svg id="vela-svg" width="100%" height="250" viewBox="0 0 120 250" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Gradiente de luz lateral para 3D -->
+        <radialGradient id="grad3d" cx="30%" cy="40%" r="80%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0.1"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Vela Clásica 3D -->
+      <g id="vela-moderna" class="modelo-vela">
+        <!-- Cuerpo con curva elíptica 3D -->
+        <path id="cuerpo-clasico" d="M35,70 
+             C45,60 75,60 85,70 
+             L85,180 
+             C75,190 45,190 35,180 
+             Z" fill="#f6e2a6"/>
+        <!-- Luz 3D -->
+        <path d="M35,70 
+             C45,60 75,60 85,70 
+             L85,180 
+             C75,190 45,190 35,180 
+             Z" fill="url(#grad3d)"/>
+        <!-- Tapa superior -->
+        <ellipse id="top-clasica" cx="60" cy="70" rx="25" ry="10" fill="#f6e2a6"/>
+      </g>
+
+      <!-- Vela Moderna 3D (más delgada) -->
+      <g id="vela-clasica" class="modelo-vela" style="display: none;">
+        <path id="cuerpo-moderna" d="M45,70 
+             C52,62 68,62 75,70 
+             L75,180 
+             C68,188 52,188 45,180 
+             Z" fill="#f6e2a6"/>
+        <path d="M45,70 
+             C52,62 68,62 75,70 
+             L75,180 
+             C68,188 52,188 45,180 
+             Z" fill="url(#grad3d)"/>
+        <ellipse id="top-moderna" cx="60" cy="70" rx="18" ry="8" fill="#f6e2a6"/>
+      </g>
+
+      <!-- Llama centrada -->
+      <path d="M60,40 Q63,25 60,10 Q57,25 60,40" fill="orange"/>
     </svg>
   </div>
 </div>
 
+
+<!-- Botón de guardar -->
+<div style="margin-top: 0px; text-align: center;">
+  <%= f.submit "Guardar Vela", class: "guardar-vela-btn" %>
+</div>
+
+<style>
+  .guardar-vela-btn {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .guardar-vela-btn:hover {
+    background-color: #e08e0b;
+    transform: scale(1.03);
+  }
+
+  .guardar-vela-btn:active {
+    transform: scale(0.98);
+  }
+</style>
 
 
 
