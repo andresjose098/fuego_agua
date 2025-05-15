@@ -83,6 +83,44 @@
     });
   });
 
+
+  
+     document.addEventListener("DOMContentLoaded", () => {
+    const radios = document.querySelectorAll('input[type=radio][name="vela[color]"]');
+    const circles = document.querySelectorAll('.circle');
+    const modeloSelect = document.getElementById("modelo-select");
+    const previewImg = document.getElementById("vela-preview-img");
+    const colorOverlay = document.getElementById("color-overlay");
+
+    // === Cambiar imagen según el modelo ===
+    modeloSelect.addEventListener("change", () => {
+      const modelo = modeloSelect.value.toLowerCase(); // clásico o moderno
+      const imagen = modelo === "moderno" ? "vela_moderna.png" : "vela_clasica.jpg";
+      previewImg.src = `/assets/${imagen}`;
+    });
+
+    // === Cambiar color del overlay (sin tocar fondo) ===
+    function updateColorOverlay(color) {
+      colorOverlay.style.backgroundColor = color;
+    }
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        // Marcar el círculo
+        circles.forEach(c => c.classList.remove('selected'));
+        const selected = document.querySelector(`span[data-for="${radio.id}"]`);
+        if (selected) selected.classList.add('selected');
+
+        // Aplicar color
+        updateColorOverlay(radio.value);
+      });
+    });
+
+    // Si hay color preseleccionado
+    const checked = document.querySelector('input[name="vela[color]"]:checked');
+    if (checked) updateColorOverlay(checked.value);
+  });
+
    
 </script>
 
@@ -90,8 +128,13 @@
   <!-- Vista previa -->
 <div style="margin-bottom: 30px;">
   <label style="font-size: 18px;"><strong>Vista previa</strong></label><br>
-  <img id="vela-preview-img" src="<%= asset_path('vela_clasica.jpg') %>" width="60%" style="margin-top: 10px; border-radius: 8px;">
+  <div style="position: relative; display: inline-block; margin-top: 10px; width: 250px;">
+    <img id="vela-preview-img" src="<%= asset_path('vela_clasica.jpg') %>" width="100%" style="border-radius: 8px;">
+    <div id="color-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; background-color: transparent; opacity: 0.3; pointer-events: none;"></div>
+  </div>
 </div>
+
+
 
 
 <% end %>
