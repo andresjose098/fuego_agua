@@ -1,0 +1,2 @@
+class Vela < ApplicationRecord
+end

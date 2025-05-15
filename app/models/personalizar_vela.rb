@@ -1,0 +1,2 @@
+class PersonalizarVela < ApplicationRecord
+end

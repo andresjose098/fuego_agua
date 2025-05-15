@@ -15,9 +15,10 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-= require rails-ujs
+// require rails-ujs
 
-
-import Rails from 'rails-ujs';
-Rails.start();
+import Rails from "@rails/ujs"
+window.Rails = Rails
+Rails.start()
+//console.log("JS cargado correctamente");
 

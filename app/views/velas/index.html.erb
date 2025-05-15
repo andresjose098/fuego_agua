@@ -1,0 +1,11 @@
+<h1>Velas Publicadas</h1>
+
+<ul>
+  <% @velas.each do |vela| %>
+    <li>
+      Modelo: <%= vela.modelo %> |
+      Estilo: <%= vela.estilo %> |
+      Color: <span style="display:inline-block;width:20px;height:20px;background:<%= vela.color %>;border-radius:50%;border:1px solid #ccc;"></span>
+    </li>
+  <% end %>
+</ul>

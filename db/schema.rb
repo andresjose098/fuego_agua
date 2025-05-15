@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_13_002035) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_14_221924) do
+  create_table "personalizar_velas", force: :cascade do |t|
+    t.string "modelo"
+    t.string "color"
+    t.string "estilo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "velas", force: :cascade do |t|
+    t.string "modelo"
+    t.string "color"
+    t.string "estilo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
