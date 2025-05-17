@@ -14,6 +14,12 @@
       Estilo: <%= vela.estilo %> |
       Color: 
       <span style="display:inline-block;width:20px;height:20px;background:<%= vela.color %>;border-radius:50%;border:1px solid #ccc; margin-right: 10px;"></span>
+      <% if vela.dibujo.present? %>
+       Sticker: 
+       <img src="<%= asset_path("dibujos/#{vela.dibujo}.svg") %>" alt="<%= vela.dibujo %>" width="24" height="24" style="vertical-align: middle; margin-left: 5px;">
+        <% else %>
+         Sticker: <em>No seleccionado</em>
+        <% end %>
 
       <!-- Botón para eliminar -->
       <%= link_to "🗑️ Eliminar", vela_path(vela), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta vela?" }, class: "btn-eliminar-vela" %>

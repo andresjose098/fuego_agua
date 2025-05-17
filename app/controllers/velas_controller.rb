@@ -25,6 +25,6 @@ class VelasController < ApplicationController
   private
 
   def vela_params
-    params.require(:vela).permit(:modelo, :color, :estilo)
+    params.require(:vela).permit(:modelo, :color, :estilo, :dibujo)
   end
 end
