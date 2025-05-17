@@ -1,11 +1,60 @@
 <h1>Velas Publicadas</h1>
 
+<!-- Botón para registrar nueva vela -->
+<div style="margin-bottom: 20px; text-align: right;">
+  <%= link_to "➕ Nueva Vela", new_vela_path, class: "btn-nueva-vela" %>
+</div>
+<br>
+<br>
+<br>
 <ul>
   <% @velas.each do |vela| %>
-    <li>
+    <li style="margin-bottom: 15px;">
       Modelo: <%= vela.modelo %> |
       Estilo: <%= vela.estilo %> |
-      Color: <span style="display:inline-block;width:20px;height:20px;background:<%= vela.color %>;border-radius:50%;border:1px solid #ccc;"></span>
+      Color: 
+      <span style="display:inline-block;width:20px;height:20px;background:<%= vela.color %>;border-radius:50%;border:1px solid #ccc; margin-right: 10px;"></span>
+
+      <!-- Botón para eliminar -->
+      <%= link_to "🗑️ Eliminar", vela_path(vela), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta vela?" }, class: "btn-eliminar-vela" %>
     </li>
   <% end %>
 </ul>
+
+<style>
+  .btn-nueva-vela {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-nueva-vela:hover {
+    background-color: #2e86c1;
+    transform: scale(1.03);
+  }
+
+  .btn-eliminar-vela {
+    background-color: #e74c3c;
+    color: white;
+    padding: 6px 12px;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-eliminar-vela:hover {
+    background-color: #c0392b;
+    transform: scale(1.02);
+  }
+
+  .btn-eliminar-vela:active {
+    transform: scale(0.98);
+  }
+</style>

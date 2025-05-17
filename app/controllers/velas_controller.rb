@@ -10,10 +10,16 @@ class VelasController < ApplicationController
     else
       render :new
     end
-  end
+  end  
 
   def index
     @velas = Vela.all
+  end
+
+  def destroy
+    @vela = Vela.find(params[:id])
+    @vela.destroy
+    redirect_to velas_path, notice: 'La vela fue eliminada exitosamente.'
   end
 
   private

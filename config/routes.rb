@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get "sessions/destroy"
   root 'home#index'
 
- resources :velas, only: [:new, :create, :index]
+ resources :velas
 
 
   resources :personalizar_velas, only: [:new,:create,:index]

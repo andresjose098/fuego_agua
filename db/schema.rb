@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_14_221924) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_16_013200) do
   create_table "personalizar_velas", force: :cascade do |t|
     t.string "modelo"
     t.string "color"
@@ -32,5 +32,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_14_221924) do
     t.string "estilo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "dibujo"
   end
 end

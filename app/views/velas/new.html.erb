@@ -36,6 +36,42 @@
   </div>
 </div>
 
+
+<!-- Selección de dibujos -->
+<div id="seleccion-dibujos" style="display: none; margin-bottom: 30px;">
+  <label style="font-size: 18px;"><strong>Selecciona un dibujo</strong></label>
+  <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+    <% dibujos = ['flor', 'arcoiris', 'cara_feliz', 'corazon', 'estrella', 'hoja', 'flor2', 'rama', 'flama'] %>
+    <% dibujos.each do |d| %>
+      <label style="cursor:pointer;">
+        <%= f.radio_button :dibujo, d, style: "display: none;" %>
+        <img src="/assets/dibujos/<%= d %>.svg" alt="<%= d %>" width="48" height="48" class="dibujo-icono" data-nombre="<%= d %>">
+      </label>
+    <% end %>
+  </div>
+</div>
+
+<!-- Campo de entrada para texto personalizado -->
+<div id="campo-texto" style="display: none; margin-bottom: 30px;">
+  <label style="font-size: 18px;"><strong>Escribe tu mensaje</strong></label><br>
+  <%= f.text_field :mensaje, id: "texto-personalizado", placeholder: "Escribe aquí", style: "padding: 8px; font-size: 16px; width: 200px;" %>
+</div>
+
+
+<style>
+  .dibujo-icono {
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .dibujo-icono.selected {
+    border-color: #f39c12;
+    transform: scale(1.1);
+  }
+</style>
+
+
 <style>
   .circle {
     display: inline-block;
@@ -177,6 +213,50 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+  
+ document.addEventListener("DOMContentLoaded", () => {
+    const estiloRadios = document.querySelectorAll("input[name='vela[estilo]']");
+    const dibujosContainer = document.getElementById("seleccion-dibujos");
+    const dibujoRadios = document.querySelectorAll('input[name="vela[dibujo]"]');
+    const dibujoImg = document.getElementById("dibujo-en-vela");
+
+    function toggleDibujos() {
+      const seleccionado = document.querySelector("input[name='vela[estilo]']:checked");
+      dibujosContainer.style.display = (seleccionado && seleccionado.value === "Dibujos") ? "block" : "none";
+
+      // Si NO es "Dibujos", ocultamos el dibujo
+      if (!seleccionado || seleccionado.value !== "Dibujos") {
+        dibujoImg.setAttribute("visibility", "hidden");
+      }
+    }
+
+    estiloRadios.forEach(radio => {
+      radio.addEventListener("change", toggleDibujos);
+    });
+
+    dibujoRadios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        const nombre = radio.value;
+        dibujoImg.setAttribute("href", `/assets/dibujos/${nombre}.svg`);
+        dibujoImg.setAttribute("visibility", "visible");
+
+        // Resaltar dibujo visualmente
+        document.querySelectorAll(".dibujo-icono").forEach(img => img.classList.remove("selected"));
+        const imgSeleccionada = document.querySelector(`.dibujo-icono[data-nombre='${nombre}']`);
+        if (imgSeleccionada) imgSeleccionada.classList.add("selected");
+      });
+    });
+
+    // Inicialización al cargar
+    toggleDibujos();
+    const dibujoSeleccionado = document.querySelector('input[name="vela[dibujo]"]:checked');
+    if (dibujoSeleccionado) {
+      dibujoImg.setAttribute("href", `/assets/dibujos/${dibujoSeleccionado.value}.svg`);
+      dibujoImg.setAttribute("visibility", "visible");
+    }
+  });
+
+  
 
 </script>
 
@@ -185,7 +265,12 @@ document.addEventListener("DOMContentLoaded", () => {
 <div style="margin-bottom: 30px;">
   <label style="font-size: 18px;"><strong>Vista previa 3D</strong></label><br>
   <div style="margin-top: 10px; width: 220px;">
+  <!-- Imagen del dibujo -->
+
+
     <svg id="vela-svg" width="100%" height="250" viewBox="0 0 120 250" xmlns="http://www.w3.org/2000/svg">
+   
+
       <defs>
         <!-- Gradiente de luz lateral para 3D -->
         <radialGradient id="grad3d" cx="30%" cy="40%" r="80%">
@@ -226,12 +311,29 @@ document.addEventListener("DOMContentLoaded", () => {
              Z" fill="url(#grad3d)"/>
         <ellipse id="top-moderna" cx="60" cy="70" rx="18" ry="8" fill="#f6e2a6"/>
       </g>
+        <image
+  id="dibujo-en-vela"
+  href=""
+  x="45"
+  y="100"
+  width="30"
+  height="30"
+  visibility="hidden"
+  style="filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.4));"
+/>
+
+<!-- Texto personalizado sobre la vela -->
+<text id="svg-texto" x="60" y="135" text-anchor="middle" font-size="14" fill="#000" style="visibility: hidden; font-family: Arial;">
+  Texto aquí
+</text>
 
       <!-- Llama centrada -->
       <path d="M60,40 Q63,25 60,10 Q57,25 60,40" fill="orange"/>
+      
     </svg>
   </div>
 </div>
+
 
 
 <!-- Botón de guardar -->
