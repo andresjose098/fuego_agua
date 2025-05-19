@@ -89,6 +89,29 @@
 </style>
 
 <script>
+
+      document.addEventListener("DOMContentLoaded", () => {
+  const estiloRadios = document.querySelectorAll("input[name='vela[estilo]']");
+  const colorOptions = document.getElementById("color-options");
+
+  function toggleColorOptions() {
+    const seleccionado = document.querySelector("input[name='vela[estilo]']:checked");
+    if (seleccionado && seleccionado.value === "Color") {
+      colorOptions.style.display = "flex";
+    } else {
+      colorOptions.style.display = "none";
+    }
+  }
+
+  estiloRadios.forEach(radio => {
+    radio.addEventListener("change", toggleColorOptions);
+  });
+
+  // Inicializar al cargar
+  toggleColorOptions();
+});
+
+
   document.addEventListener("DOMContentLoaded", () => {
     const radios = document.querySelectorAll('input[type=radio][name="vela[color]"]');
     const circles = document.querySelectorAll('.circle');

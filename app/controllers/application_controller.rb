@@ -8,4 +8,9 @@ class ApplicationController < ActionController::Base
   def user_signed_in?
     current_user.present?
   end
+
+  def after_sign_in_path_for(resource)
+  velas_path  # o donde quieras que vaya después de loguearse
+end
+
 end

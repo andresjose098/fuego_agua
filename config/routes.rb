@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "landing/index"
   get "vela_ganadora_edicion_limitadas/index"
   get "ela_ganadora_edicion_limitadas/index"
   get "foro_velas/index"
@@ -12,7 +13,8 @@ Rails.application.routes.draw do
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
-  root 'home#index'
+ # root 'home#index'
+root to: 'landing#index'
 
  resources :velas
 
