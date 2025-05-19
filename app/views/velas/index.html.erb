@@ -20,6 +20,11 @@
         <% else %>
          Sticker: <em>No seleccionado</em>
         <% end %>
+        
+      <% if vela.mensaje.present? %>
+        | Mensaje: "<%= vela.mensaje %>"
+      <% end %>
+
 
       <!-- Botón para eliminar -->
       <%= link_to "🗑️ Eliminar", vela_path(vela), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta vela?" }, class: "btn-eliminar-vela" %>

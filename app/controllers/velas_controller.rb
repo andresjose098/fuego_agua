@@ -1,4 +1,8 @@
 class VelasController < ApplicationController
+
+  
+
+
   def new
     @vela = Vela.new
   end
@@ -25,6 +29,6 @@ class VelasController < ApplicationController
   private
 
   def vela_params
-    params.require(:vela).permit(:modelo, :color, :estilo, :dibujo)
+    params.require(:vela).permit(:modelo, :color, :estilo, :dibujo, :mensaje)
   end
 end
