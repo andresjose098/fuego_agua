@@ -4,34 +4,48 @@
 <div style="margin-bottom: 20px; text-align: right;">
   <%= link_to "➕ Nueva Vela", new_vela_path, class: "btn-nueva-vela" %>
 </div>
-<br>
-<br>
-<br>
+<br><br><br>
+
 <ul>
-  <% @velas.each do |vela| %>
-    <li style="margin-bottom: 15px;">
+  <% @velas.each_with_index do |vela, i| %>
+    <li style="margin-bottom: 25px;">
       Modelo: <%= vela.modelo %> |
       Estilo: <%= vela.estilo %> |
-      Color: 
+      Color:
       <span style="display:inline-block;width:20px;height:20px;background:<%= vela.color %>;border-radius:50%;border:1px solid #ccc; margin-right: 10px;"></span>
+
       <% if vela.dibujo.present? %>
-       Sticker: 
-       <img src="<%= asset_path("dibujos/#{vela.dibujo}.svg") %>" alt="<%= vela.dibujo %>" width="24" height="24" style="vertical-align: middle; margin-left: 5px;">
-        <% else %>
-         Sticker: <em>No seleccionado</em>
-        <% end %>
-        
+        Sticker:
+        <img src="<%= asset_path("dibujos/#{vela.dibujo}.svg") %>" alt="<%= vela.dibujo %>" width="24" height="24" style="vertical-align: middle; margin-left: 5px;">
+      <% else %>
+        Sticker: <em>No seleccionado</em>
+      <% end %>
+
       <% if vela.mensaje.present? %>
         | Mensaje: "<%= vela.mensaje %>"
       <% end %>
 
-
-      <!-- Botón para eliminar -->
+      <!-- Botón de eliminar -->
       <%= link_to "🗑️ Eliminar", vela_path(vela), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta vela?" }, class: "btn-eliminar-vela" %>
+
+      <!-- Botón de compra -->
+      <button class="btn-comprar" onclick="toggleFormulario(<%= i %>)">🛒 Comprar</button>
+
+      <!-- Formulario de compra oculto -->
+      <div id="formulario-compra-<%= i %>" class="formulario-compra" style="display: none; margin-top: 10px;">
+        <form>
+          <input type="text" placeholder="Nombre completo" required>
+          <input type="text" placeholder="Barrio" required>
+          <input type="tel" placeholder="Celular" required>
+          <input type="text" placeholder="Tarjeta crédito o débito" required>
+          <button type="submit" class="btn-confirmar">✅ Confirmar Compra</button>
+        </form>
+      </div>
     </li>
   <% end %>
 </ul>
 
+<!-- Estilos -->
 <style>
   .btn-nueva-vela {
     background-color: #3498db;
@@ -65,7 +79,52 @@
     transform: scale(1.02);
   }
 
-  .btn-eliminar-vela:active {
-    transform: scale(0.98);
+  .btn-comprar {
+    background-color: #27ae60;
+    color: white;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-comprar:hover {
+    background-color: #219150;
+  }
+
+  .formulario-compra input {
+    display: block;
+    margin-top: 8px;
+    padding: 8px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  .btn-confirmar {
+    margin-top: 10px;
+    padding: 8px 18px;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .btn-confirmar:hover {
+    background-color: #d87d00;
   }
 </style>
+
+<!-- Script para mostrar y ocultar el formulario -->
+<script>
+  function toggleFormulario(index) {
+    const form = document.getElementById(`formulario-compra-${index}`);
+    form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+  }
+</script>
