@@ -30,6 +30,14 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Instalar Node.js y Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn && \
+    yarn install --check-files
+
+
+
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
@@ -46,7 +54,8 @@ RUN bundle exec bootsnap precompile app/ lib/
 ENV SECRET_KEY_BASE=dummykey
 #RUN bundle exec rails assets:precompile
 #RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-RUN bundle exec rails assets:precompile || (cat log/production.log && false)
+RUN bundle exec rails assets:precompile || (echo "🚨 ERROR EN ASSETS" && ls -lah log && cat log/production.log && false)
+
 
 
 

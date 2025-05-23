@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+ # devise_for :users
+  #devise_for :users
   get "landing/index"
   get "vela_ganadora_edicion_limitadas/index"
   get "ela_ganadora_edicion_limitadas/index"
@@ -15,6 +17,12 @@ Rails.application.routes.draw do
   get "sessions/destroy"
  # root 'home#index'
 root to: 'landing#index'
+
+
+namespace :admin do
+  get 'dashboard', to: 'dashboard#index'
+end
+
 
  resources :velas
 

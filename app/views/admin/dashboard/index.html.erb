@@ -1,0 +1,16 @@
+<h1>Panel de Administración</h1>
+
+<% @compras.each do |compra| %>
+  <div style="border:1px solid #ccc; padding:15px; margin-bottom:10px;">
+    <p><strong>Comprador:</strong> <%= compra.user.name %></p>
+    <p><strong>Vela:</strong> Modelo <%= compra.vela.modelo %>, Color <%= compra.vela.color %>, Estilo <%= compra.vela.estilo %></p>
+    <p><strong>Mensaje:</strong> <%= compra.vela.mensaje %></p>
+    <p><strong>Datos de Pago:</strong></p>
+    <ul>
+      <li>Nombre: <%= compra.nombre %></li>
+      <li>Barrio: <%= compra.barrio %></li>
+      <li>Teléfono: <%= compra.celular %></li>
+      <li>Tarjeta: **** **** **** <%= compra.tarjeta[-4..-1] %></li>
+    </ul>
+  </div>
+<% end %>

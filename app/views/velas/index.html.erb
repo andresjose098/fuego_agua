@@ -28,19 +28,18 @@
       <!-- Botón de eliminar -->
       <%= link_to "🗑️ Eliminar", vela_path(vela), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta vela?" }, class: "btn-eliminar-vela" %>
 
-      <!-- Botón de compra -->
-      <button class="btn-comprar" onclick="toggleFormulario(<%= i %>)">🛒 Comprar</button>
+     <!-- Botón de compra con envío por WhatsApp -->
+<% mensaje = "¡Hola! buenas tardes fuego de agua, quiero comprar esta vela:\n\n" +
+              "🕯️ Modelo: #{vela.modelo}\n" +
+             
+              (vela.color.present? ? "🟢 Color: #{vela.color}\n" : "") +
+              (vela.dibujo.present? ? "🖼️ Dibujo: #{vela.dibujo}\n" : "🖼️ Dibujo: No seleccionado\n") +
+              (vela.mensaje.present? ? "💬 Mensaje: \"#{vela.mensaje}\"\n" : "") +
+              "\n¿Podemos coordinar el pedido? Gracias 🙌" %>
 
-      <!-- Formulario de compra oculto -->
-      <div id="formulario-compra-<%= i %>" class="formulario-compra" style="display: none; margin-top: 10px;">
-        <form>
-          <input type="text" placeholder="Nombre completo" required>
-          <input type="text" placeholder="Barrio" required>
-          <input type="tel" placeholder="Celular" required>
-          <input type="text" placeholder="Tarjeta crédito o débito" required>
-          <button type="submit" class="btn-confirmar">✅ Confirmar Compra</button>
-        </form>
-      </div>
+<%= link_to "🛒 Comprar", "https://wa.me/573165155249?text=#{ERB::Util.url_encode(mensaje)}", target: "_blank", class: "btn-comprar" %>
+
+
     </li>
   <% end %>
 </ul>
