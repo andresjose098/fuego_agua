@@ -51,7 +51,7 @@ COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-ENV SECRET_KEY_BASE=dummykey
+ENV SECRET_KEY_BASE="956a440de09c08c13afcd8312d86c912"
 #RUN bundle exec rails assets:precompile
 #RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 RUN bundle exec rails assets:precompile || (echo "🚨 ERROR EN ASSETS" && ls -lah log && cat log/production.log && false)
